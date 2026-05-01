@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio — Tindom Arol</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --border: rgba(255,255,255,0.07);
+            --accent: #4fffb0;
+            --accent2: #7b6fff;
+            --text: #e8e8f0;
+            --muted: #6b6b88;
+            --card-bg: rgba(255,255,255,0.03);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Mono', monospace;
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+           
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+               linear-gradient(rgba(75,255,176,0.04) 1px, transparent 1px),
+               linear-gradient(90deg, rgba(75,255,176,0.04) 1px, transparent 1px);
+           background-size: 40px 40px;
+           pointer-events: none;
+           z-index: 0;
+         }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px 48px;
+            background: rgba(10,10,15,0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo {
+            font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px;
+            color: var(--accent); letter-spacing: 0.08em; text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            color: var(--muted); text-decoration: none; font-size: 10.5px;
+            letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .lang-btn {
+            color: var(--accent) !important;
+            border: 1px solid rgba(75,255,176,0.35);
+            padding: 2px 10px; cursor: pointer;
+        }
+        .lang-btn:hover { background: rgba(75,255,176,0.08); }
+
+        /* SECTIONS */
+        section { padding: 96px 48px; position: relative; z-index: 1; }
+        .section-label {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em;
+            color: var(--accent); margin-bottom: 12px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(26px, 4vw, 46px);
+            font-weight: 800; color: var(--text);
+            letter-spacing: -0.02em; margin-bottom: 14px;
+        }
+        .section-intro {
+            color: var(--muted); max-width: 620px;
+            line-height: 1.95; margin-bottom: 52px; font-size: 12.5px;
+        }
+        .divider { height: 1px; background: var(--border); margin: 0 48px; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; padding: 120px 48px 80px;
+            position: relative; overflow: hidden;
+        }
+        .hero-grid {
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+            background-size: 64px 64px;
+            pointer-events: none; z-index: 0;
+        }
+        .hero-glow {
+            position: absolute; top: -180px; right: -180px;
+            width: 650px; height: 650px;
+            background: radial-gradient(circle, rgba(75,255,176,0.07) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
+        }
+        .hero-glow2 {
+            position: absolute; bottom: -100px; left: -80px;
+            width: 480px; height: 480px;
+            background: radial-gradient(circle, rgba(123,111,255,0.05) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 22px;
+        }
+        .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(54px, 9vw, 108px);
+            font-weight: 800; line-height: 0.92;
+            letter-spacing: -0.03em; color: var(--text); margin-bottom: 6px;
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero-sub {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(14px, 1.8vw, 21px);
+            font-weight: 600; color: var(--muted);
+            margin-bottom: 28px; margin-top: 14px;
+        }
+        .hero-desc {
+            max-width: 500px; color: var(--muted);
+            font-size: 12px; line-height: 2; margin-bottom: 44px;
+        }
+        .hero-stats { display: flex; gap: 48px; flex-wrap: wrap; }
+        .stat { display: flex; flex-direction: column; gap: 4px; }
+        .stat-num {
+            font-family: 'Syne', sans-serif; font-size: 30px;
+            font-weight: 800; color: var(--text);
+        }
+        .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+        .scroll-hint {
+            position: absolute; bottom: 36px; left: 48px;
+            display: flex; align-items: center; gap: 12px;
+            color: var(--muted); font-size: 10px;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            animation: bounce 2s infinite; z-index: 1;
+        }
+        @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+        /* PRÉSENTATION */
+        .pres-block {
+            max-width: 760px; background: var(--card-bg);
+            border: 1px solid var(--border); border-left: 3px solid var(--accent);
+            padding: 44px 48px;
+        }
+        .pres-block p { color: var(--muted); font-size: 13px; line-height: 2.05; margin-bottom: 16px; }
+        .pres-block p:last-child { margin-bottom: 0; }
+        .pres-block strong { color: var(--text); }
+
+        /* FORMATIONS */
+        .timeline { display: flex; flex-direction: column; gap: 3px; max-width: 800px; }
+        .tl-item {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-left: 3px solid var(--accent); padding: 34px 40px;
+            transition: background 0.3s;
+        }
+        .tl-item:nth-child(2) { border-left-color: var(--accent2); }
+        .tl-item:hover { background: rgba(255,255,255,0.05); }
+        .tl-date { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+        .tl-item:nth-child(2) .tl-date { color: var(--accent2); }
+        .tl-school { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+        .tl-lieu { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+        .tl-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+        .tl-list li { font-size: 12px; color: var(--muted); padding-left: 18px; position: relative; }
+        .tl-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+        .tl-item:nth-child(2) .tl-list li::before { color: var(--accent2); }
+
+        /* COMPÉTENCES */
+        .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3px; }
+        .comp-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 34px 30px; position: relative; cursor: pointer;
+            transition: all 0.3s ease; overflow: hidden;
+        }
+        .comp-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(75,255,176,0.04) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .comp-card:hover { transform: translateY(-3px); border-color: rgba(75,255,176,0.3); }
+        .comp-card:hover::after { opacity: 1; }
+        .comp-card.prog:hover { border-color: rgba(123,111,255,0.3); }
+        .comp-card.prog::after { background: linear-gradient(135deg, rgba(123,111,255,0.04) 0%, transparent 60%); }
+        .comp-card.solid:hover { border-color: rgba(255,217,125,0.3); }
+        .comp-card.solid::after { background: linear-gradient(135deg, rgba(255,217,125,0.04) 0%, transparent 60%); }
+        .comp-card.acq  { --ca: var(--accent); }
+        .comp-card.prog { --ca: var(--accent2); }
+        .comp-card.solid { --ca: #ffd97d; }
+        .comp-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+        .comp-num { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+        .comp-badge { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 9px; border-radius: 2px; font-weight: 500; }
+        .b-acq  { background: rgba(75,255,176,0.12); color: var(--accent); }
+        .b-prog { background: rgba(123,111,255,0.12); color: var(--accent2); }
+        .b-solid { background: rgba(255,217,125,0.12); color: #ffd97d; }
+        .comp-score {
+            font-family: 'Syne', sans-serif; font-size: 46px;
+            font-weight: 800; color: var(--text); line-height: 1;
+        }
+        .comp-score sup { font-size: 15px; color: var(--muted); font-weight: 400; }
+        .comp-name { font-family: 'Syne', sans-serif; font-size: 13.5px; font-weight: 700; color: var(--text); margin: 14px 0 10px; line-height: 1.4; }
+        .comp-desc { font-size: 11px; color: var(--muted); line-height: 1.9; margin-bottom: 18px; }
+        .comp-bar-w { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 14px; }
+        .comp-bar { height: 100%; background: var(--ca, var(--accent)); border-radius: 2px; }
+        .comp-cta { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ca, var(--accent)); display: flex; align-items: center; gap: 6px; }
+        .comp-cta::after { content: '→'; transition: transform 0.2s; }
+        .comp-card:hover .comp-cta::after { transform: translateX(4px); }
+
+        /* MODAL */
+        .modal-ov {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.88); z-index: 999;
+            backdrop-filter: blur(8px);
+            align-items: center; justify-content: center;
+        }
+        .modal-ov.on { display: flex; }
+        .modal-box {
+            background: #12121a; border: 1px solid rgba(255,255,255,0.1);
+            padding: 50px; max-width: 700px; width: 92%;
+            max-height: 85vh; overflow-y: auto; position: relative;
+            animation: mIn 0.22s ease;
+        }
+        @keyframes mIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+        .modal-x {
+            position: absolute; top: 18px; right: 22px;
+            background: none; border: none; color: var(--muted);
+            font-size: 20px; cursor: pointer; transition: color 0.2s;
+        }
+        .modal-x:hover { color: var(--accent); }
+        .modal-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent); margin-bottom: 8px; }
+        .modal-ttl { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 800; color: var(--text); margin-bottom: 6px; line-height: 1.3; }
+        .modal-sc { font-family: 'Syne', sans-serif; font-size: 38px; font-weight: 800; color: var(--text); margin-bottom: 22px; line-height: 1; }
+        .modal-sc sup { font-size: 14px; color: var(--muted); font-weight: 400; }
+        .modal-txt { color: var(--muted); font-size: 12px; line-height: 2; margin-bottom: 26px; border-left: 2px solid var(--border); padding-left: 16px; }
+        .modal-sub { font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent2); margin-bottom: 10px; }
+        .modal-docs { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+        .modal-docs li a {
+            display: flex; align-items: center; gap: 12px;
+            color: var(--text); text-decoration: none; font-size: 12px;
+            padding: 12px 16px; border: 1px solid var(--border);
+            transition: border-color 0.2s, color 0.2s, background 0.2s;
+        }
+        .modal-docs li a:hover { border-color: var(--accent); color: var(--accent); background: rgba(75,255,176,0.04); }
+        .modal-docs li a::before { content: '📄'; font-size: 14px; }
+
+        /* SAE */
+        .sae-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 14px; }
+        .sae-card {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 26px 22px; transition: border-color 0.3s, transform 0.3s;
+        }
+        .sae-card:hover { border-color: rgba(123,111,255,0.35); transform: translateY(-2px); }
+        .sae-code { font-size: 10px; color: var(--accent2); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px; }
+        .sae-title { font-family: 'Syne', sans-serif; font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.4; }
+        .sae-desc { color: var(--muted); font-size: 11px; line-height: 1.85; margin-bottom: 14px; }
+        .sae-sc { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 800; color: var(--accent2); }
+        .sae-sc span { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; font-weight: 400; }
+
+        /* RÉFLEXION */
+        .refl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+        .refl-block {
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 34px 30px; transition: background 0.3s;
+        }
+        .refl-block:hover { background: rgba(255,255,255,0.04); }
+        .refl-block.full { grid-column: 1 / -1; }
+        .refl-block h3 {
+            font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+            color: var(--text); margin-bottom: 16px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .ico { font-size: 18px; }
+        .refl-block p, .refl-block ul { color: var(--muted); font-size: 12px; line-height: 1.95; }
+        .refl-block ul { padding-left: 16px; }
+        .refl-block ul li { margin-bottom: 7px; }
+        .refl-block table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .refl-block th { text-align: left; padding: 8px 10px; color: var(--accent); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid var(--border); }
+        .refl-block td { padding: 9px 10px; color: var(--muted); border-bottom: 1px solid var(--border); }
+        .refl-block td:last-child { color: var(--text); font-family: 'Syne', sans-serif; font-weight: 700; }
+
+        /* BILAN */
+        .bilan-inner { max-width: 780px; }
+        .bilan-inner p { color: var(--muted); font-size: 13px; line-height: 2.05; margin-bottom: 20px; }
+        .bilan-hl { border-left: 3px solid var(--accent); padding: 18px 22px; margin: 32px 0; background: rgba(75,255,176,0.03); }
+        .bilan-hl p { color: var(--text) !important; font-family: 'Syne', sans-serif; font-size: 16px !important; font-weight: 600; margin-bottom: 0 !important; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 13px 26px; background: var(--accent); color: var(--bg);
+            font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+            letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+            transition: all 0.2s; margin-top: 10px; border: none; cursor: pointer;
+        }
+        .btn:hover { background: #2ee89a; transform: translateY(-1px); }
+
+
+        /* HOBBIES */
+        .hob-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); gap: 14px; }
+        .hob-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 34px 26px; transition: border-color 0.3s, transform 0.3s;
+        }
+        .hob-card:hover { border-color: rgba(75,255,176,0.25); transform: translateY(-3px); }
+        .hob-ico { font-size: 34px; margin-bottom: 16px; display: block; }
+        .hob-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+        .hob-desc { font-size: 12px; color: var(--muted); line-height: 1.9; }
+
+        /* CONTACT */
+        .cont-block {
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 48px; max-width: 560px;
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .cont-row { display: flex; align-items: center; gap: 20px; }
+        .cont-key { font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); min-width: 90px; }
+        .cont-val { font-size: 13px; color: var(--muted); }
+        .cont-val a { color: var(--text); text-decoration: none; }
+        .cont-val a:hover { color: var(--accent); }
+        .cont-sep { height: 1px; background: var(--border); }
+
+        /* PDF VIEWER */
+        .pdf-ov {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.94); z-index: 1100;
+            backdrop-filter: blur(10px);
+            align-items: center; justify-content: center;
+        }
+        .pdf-ov.on { display: flex; }
+        .pdf-box {
+            width: 92vw; height: 90vh;
+            background: #12121a;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex; flex-direction: column;
+            animation: mIn 0.2s ease;
+        }
+        .pdf-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .pdf-name {
+            font-size: 12px; color: var(--muted);
+            white-space: nowrap; overflow: hidden;
+            text-overflow: ellipsis; max-width: 70%;
+        }
+        .pdf-dl {
+            font-size: 11px; color: var(--accent);
+            text-decoration: none; letter-spacing: 0.08em;
+            border: 1px solid rgba(75,255,176,0.3);
+            padding: 4px 12px; transition: background 0.2s;
+        }
+        .pdf-dl:hover { background: rgba(75,255,176,0.08); }
+        .pdf-close {
+            background: none; border: none; color: var(--muted);
+            font-size: 18px; cursor: pointer; transition: color 0.2s;
+            padding: 0 4px;
+        }
+        .pdf-close:hover { color: var(--accent); }
+        .pdf-frame {
+            flex: 1; width: 100%; border: none;
+            background: #1a1a2a;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 38px 48px; display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid var(--border); color: var(--muted);
+            font-size: 11px; letter-spacing: 0.05em; position: relative; z-index: 1;
+        }
+
+        /* ANIMATIONS */
+        .fade-up { opacity: 0; transform: translateY(26px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-up.on { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) { .refl-grid { grid-template-columns: 1fr; } .refl-block.full { grid-column: 1; } }
+        @media (max-width: 768px) {
+            nav { padding: 13px 20px; }
+            .nav-links { display: none; }
+            section { padding: 68px 24px; }
+            .hero { padding: 96px 24px 68px; }
+            .divider { margin: 0 24px; }
+            footer { padding: 26px 24px; flex-direction: column; gap: 10px; text-align: center; }
+            .pres-block, .cont-block { padding: 26px; }
+            .modal-box { padding: 28px 20px; }
+            .tl-item { padding: 22px; }
+        }
+        .cont-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            width: 100%;
+           padding: 4px 0;
+        }
+        .cont-input::placeholder { color: var(--muted); }
+        .cont-textarea {
+             resize: vertical;
+             min-height: 100px;
+             line-height: 1.8;
+       }
+    </style>
+</head>
+<body>
+
+<!-- ══ ACCUEIL ANCHOR ══ -->
+<div id="accueil"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+    <a href="#accueil" class="nav-logo">TA_</a>
+    <ul class="nav-links">
+        <li><a href="#accueil"       data-k="nav-acc">Accueil</a></li>
+        <li><a href="#presentation"  data-k="nav-pres">Présentation</a></li>
+        <li><a href="#formations"    data-k="nav-form">Formations</a></li>
+        <li><a href="#competences"   data-k="nav-comp">Compétences</a></li>
+        <li><a href="#sae"           data-k="nav-sae">Projets SAE</a></li>
+        <li><a href="#reflexion"     data-k="nav-refl">Réflexion</a></li>
+        <li><a href="#bilan"         data-k="nav-bil">Bilan</a></li>
+        <li><a href="#hobbies"       data-k="nav-hob">Hobbies</a></li>
+        <li><a href="#contact"       data-k="nav-cont">Contact</a></li>
+        <li><a href="#" class="lang-btn" id="langBtn" onclick="toggleLang();return false;">EN</a></li>
+    </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-content">
+        <div class="hero-tag" data-k="h-tag">Portfolio numérique · BUT R&T</div>
+        <h1><span>Tindom</span><br>Arol</h1>
+        <div class="hero-sub" data-k="h-sub">Futur Hacker éthique </div>
+        <p class="hero-desc" data-k="h-desc">
+            Étudiant en 2ᵉ année de BUT Réseaux & Télécommunications, parcours cybersécurité.
+            Ce portfolio présente mes compétences, leur progression et les preuves concrètes
+            issues de ma formation — SAE, TP et projets.
+        </p>
+        <div class="hero-stats">
+            <div class="stat"><span class="stat-num">5</span><span class="stat-label" data-k="s1">Compétences</span></div>
+            <div class="stat"><span class="stat-num">5</span><span class="stat-label" data-k="s2">SAE réalisées</span></div>
+            <div class="stat"><span class="stat-num">13.7</span><span class="stat-label" data-k="s3">Moyenne générale</span></div>
+        </div>
+    </div>
+    <div class="scroll-hint" data-k="scroll">↓ &nbsp; Défiler</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PRÉSENTATION ══ -->
+<section id="presentation">
+    <div class="section-label" data-k="pl1">Qui suis-je</div>
+    <h2 class="section-title" data-k="pt1">Présentation</h2>
+    <div class="pres-block fade-up">
+        <p data-k="pp1">Bonjour, je m'appelle <strong>Arol Tindom</strong>. Je suis étudiant en 2ème année de BUT Réseaux et Télécommunications, parcours cybersécurité à l'Université Sorbonne Paris Nord  (IUT de Villetaneuse).</p>
+        <p data-k="pp2">Je suis passionné par les nouvelles technologies, les infrastructures réseaux et la sécurité informatique. Depuis le début de mes études, j'ai développé un fort intérêt pour tout ce qui touche aux réseaux informatiques et aux systèmes d'information.</p>
+        <p data-k="pp3">Mon objectif professionnel est de devenir <strong style="color:var(--accent)">hacher éthique</strong>.</p>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ FORMATIONS ══ -->
+<section id="formations">
+    <div class="section-label" data-k="fl1">Parcours académique</div>
+    <h2 class="section-title" data-k="ft1">Formations</h2>
+    <div class="timeline">
+        <div class="tl-item fade-up">
+            <div class="tl-date" data-k="fd1">Depuis 2024</div>
+            <div class="tl-school" data-k="fs1">BUT Réseaux & Télécommunications — Parcours Cybersécurité</div>
+            <div class="tl-lieu">Université Sorbonne Paris Nord · IUT Villetaneuse</div>
+            <ul class="tl-list">
+                <li data-k="fl1a">Formation axée sur les technologies réseau, systèmes informatiques et cybersécurité</li>
+                <li data-k="fl1b">Modules : sécurité offensive, administration système, télécommunications, pentesting</li>
+                <li data-k="fl1c">SAE (Situations d'Apprentissage et d'Évaluation) en conditions réelles de projet</li>
+            </ul>
+        </div>
+        <div class="tl-item fade-up">
+            <div class="tl-date" data-k="fd2">2023 — 2024</div>
+            <div class="tl-school" data-k="fs2">Baccalauréat Général — Mention Assez Bien</div>
+            <div class="tl-lieu">Lycée International de Palaiseau · Paris-Saclay</div>
+            <ul class="tl-list">
+                <li data-k="fl2a">Spécialités : Mathématiques & Physique-Chimie</li>
+                <li data-k="fl2b">Option : Mathématiques Expertes</li>
+                <li data-k="fl2c">Mention : Assez Bien</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ COMPÉTENCES ══ -->
+<section id="competences">
+    <div class="section-label" data-k="cl1">Autoévaluation</div>
+    <h2 class="section-title" data-k="ct1">Mes compétences</h2>
+    <p class="section-intro" data-k="ci1">
+        Cinq compétences structurent le BUT R&T parcours cybersécurité.
+        Chacune est évaluée par une note, un niveau d'acquisition et des preuves concrètes.
+        Cliquez sur une carte pour accéder aux détails et documents associés.
+    </p>
+    <div class="comp-grid">
+
+        <div class="comp-card acq fade-up" onclick="openModal('c1')">
+            <div class="comp-head">
+                <span class="comp-num">C1 · Réseau</span>
+                <span class="comp-badge b-acq" data-k="ba1">Acquis</span>
+            </div>
+            <div class="comp-score">13<sup>.95/20</sup></div>
+            <div class="comp-name" data-k="cn1">Administrer les réseaux et l'Internet</div>
+            <p class="comp-desc" data-k="cd1">Maîtrise des protocoles fondamentaux (TCP/IP, DNS, DHCP, OSPF), configuration d'équipements réseau et administration de systèmes distribués. Compétence bien ancrée, démontrée en TP et SAE.</p>
+            <div class="comp-bar-w"><div class="comp-bar" style="width:70%"></div></div>
+            <div class="comp-cta" data-k="cta">Voir les détails</div>
+        </div>
+
+        <div class="comp-card prog fade-up" onclick="openModal('c2')">
+            <div class="comp-head">
+                <span class="comp-num">C2 · Connectivité</span>
+                <span class="comp-badge b-prog" data-k="ba2">En progression</span>
+            </div>
+            <div class="comp-score">12<sup>.66/20</sup></div>
+            <div class="comp-name" data-k="cn2">Connecter les entreprises et les usagers</div>
+            <p class="comp-desc" data-k="cd2">Architecture multi-sites, VPN, interconnexions WAN/LAN. La SAE301 m'a permis de mettre en œuvre un système de transmission. Bonne base théorique, pratique en renforcement continu.</p>
+            <div class="comp-bar-w"><div class="comp-bar" style="width:63%"></div></div>
+            <div class="comp-cta" data-k="cta2">Voir les détails</div>
+        </div>
+
+        <div class="comp-card prog fade-up" onclick="openModal('c3')">
+            <div class="comp-head">
+                <span class="comp-num">C3 · Développement</span>
+                <span class="comp-badge b-prog" data-k="ba3">En progression</span>
+            </div>
+            <div class="comp-score">11<sup>.81/20</sup></div>
+            <div class="comp-name" data-k="cn3">Créer des outils et applications pour R&T</div>
+            <p class="comp-desc" data-k="cd3">Applications communicantes en Python (sockets TCP/UDP), scripting Linux, programmation embarquée. La SAE302 a consolidé ces acquis. Axe d'amélioration prioritaire.</p>
+            <div class="comp-bar-w"><div class="comp-bar" style="width:59%"></div></div>
+            <div class="comp-cta" data-k="cta3">Voir les détails</div>
+        </div>
+
+        <div class="comp-card solid fade-up" onclick="openModal('c4')">
+            <div class="comp-head">
+                <span class="comp-num">C4 · Cybersécurité</span>
+                <span class="comp-badge b-solid" data-k="ba4">Solide</span>
+            </div>
+            <div class="comp-score">14<sup>.28/20</sup></div>
+            <div class="comp-name" data-k="cn4">Administrer un système d'information sécurisé</div>
+            <p class="comp-desc" data-k="cd4">Architectures sécurisées : VLAN, ACL, VPN, pare-feu pfSense. SAE303 et TP R316 (pentesting) ont confirmé ce niveau avancé. Point fort du parcours.</p>
+            <div class="comp-bar-w"><div class="comp-bar" style="width:71%; background:#ffd97d"></div></div>
+            <div class="comp-cta" data-k="cta4">Voir les détails</div>
+        </div>
+
+        <div class="comp-card solid fade-up" onclick="openModal('c5')">
+            <div class="comp-head">
+                <span class="comp-num">C5 · Surveillance</span>
+                <span class="comp-badge b-solid" data-k="ba5">Solide</span>
+            </div>
+            <div class="comp-score">14<sup>.28/20</sup></div>
+            <div class="comp-name" data-k="cn5">Surveiller un système d'information sécurisé</div>
+            <p class="comp-desc" data-k="cd5">Monitoring réseau (Zabbix), détection d'intrusion (Snort, Suricata), analyse de logs. SAE304 et SAE303 en sont les preuves directes. Axe de prédilection professionnel.</p>
+            <div class="comp-bar-w"><div class="comp-bar" style="width:71%; background:#ffd97d"></div></div>
+            <div class="comp-cta" data-k="cta5">Voir les détails</div>
+        </div>
+
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SAE ══ -->
+<section id="sae">
+    <div class="section-label" data-k="sl1">Preuves & Projets</div>
+    <h2 class="section-title" data-k="st1">SAE réalisées</h2>
+    <p class="section-intro" data-k="si1">
+        Les Situations d'Apprentissage et d'Évaluation constituent les preuves concrètes de mes compétences.
+        Chaque SAE correspond à un projet réel, évalué et documenté dans des conditions proches du monde professionnel.
+    </p>
+    <div class="sae-grid">
+        <div class="sae-card fade-up">
+            <div class="sae-code">SAE304</div>
+            <div class="sae-title" data-k="s304t">Découvrir le pentesting</div>
+            <p class="sae-desc" data-k="s304d">Audit de sécurité offensif sur environnement simulé. Outils : Kali Linux, Nessus, Nmap. Identification de vulnérabilités, exploitation contrôlée et rédaction de rapport d'audit complet.</p>
+            <div class="sae-sc">13.50 <span>/ 20</span></div>
+        </div>
+        <div class="sae-card fade-up">
+            <div class="sae-code">SAE303</div>
+            <div class="sae-title" data-k="s303t">Concevoir un réseau informatique sécurisé multi-sites</div>
+            <p class="sae-desc" data-k="s303d">Architecture complète d'un SI multi-sites : VLANs, routage inter-VLAN, VPN site-à-site, ACL, pare-feu pfSense. Schéma Packet Tracer, chiffrage TJM et documentation technique.</p>
+            <div class="sae-sc">13.50 <span>/ 20</span></div>
+        </div>
+        <div class="sae-card fade-up">
+            <div class="sae-code">SAE301</div>
+            <div class="sae-title" data-k="s301t">Mettre en œuvre un système de transmission</div>
+            <p class="sae-desc" data-k="s301d">Étude expérimentale d'un dispositif de transmission : mesures d'atténuation, courbes caractéristiques, analyse en fréquence. Rapport complet avec protocole de mesure.</p>
+            <div class="sae-sc">12.75 <span>/ 20</span></div>
+        </div>
+        <div class="sae-card fade-up">
+            <div class="sae-code">SAE302</div>
+            <div class="sae-title" data-k="s302t">Développer des applications communicantes</div>
+            <p class="sae-desc" data-k="s302d">Application client/serveur en Python : sockets TCP/UDP, authentification SQL, protocole applicatif personnalisé et gestion des erreurs réseau.</p>
+            <div class="sae-sc">12.00 <span>/ 20</span></div>
+        </div>
+        <div class="sae-card fade-up">
+            <div class="sae-code">SAE401</div>
+            <div class="sae-title">Sécuriser un système d'information</div>
+            <p class="sae-desc">Mise en œuvre d'une démarche complète de sécurisation d'un SI : détection d'intrusion avec <strong style="color:var(--text)">Snort</strong>, supervision réseau avec <strong style="color:var(--text)">Zabbix</strong> et gestion des mots de passe avec <strong style="color:var(--text)">KeePass</strong>. Analyse des alertes, configuration des règles de détection et durcissement des accès.</p>
+            <div class="sae-sc" style="color:var(--muted); font-size:16px; font-family:'DM Mono',monospace; font-weight:400;">En cours</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ RÉFLEXION ══ -->
+<section id="reflexion">
+    <div class="section-label" data-k="rl1">Démarche réflexive</div>
+    <h2 class="section-title" data-k="rt1">Autoévaluation & méthode</h2>
+    <p class="section-intro" data-k="ri1">
+        Ce portfolio reflète une démarche d'analyse critique de ma propre progression.
+        Chaque compétence est évaluée honnêtement, avec des preuves et une réflexion sur les axes d'amélioration.
+    </p>
+    <div class="refl-grid">
+
+        <div class="refl-block fade-up">
+            <h3><span class="ico"></span> Expériences projets</h3>
+            <table>
+                <thead><tr><th>Projet</th><th>Technologies</th><th>Note /4</th></tr></thead>
+                <tbody>
+                    <tr><td>Réseau multi-sites (SAE303)</td><td>pfSense, VPN, VLAN, ACL</td><td>3.5</td></tr>
+                    <tr><td>Pentesting (SAE304)</td><td>Kali, Nessus, Nmap</td><td>3.5</td></tr>
+                    <tr><td>App Python/SQL (SAE302)</td><td>Python, Sockets, SQL</td><td>3</td></tr>
+                    <tr><td>Transmission (SAE301)</td><td>Mesures, atténuation</td><td>3</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="refl-block fade-up">
+            <h3><span class="ico"></span> Compétences techniques</h3>
+            <table>
+                <thead><tr><th>Compétence</th><th>Niveau /4</th></tr></thead>
+                <tbody>
+                    <tr><td>Administration réseau</td><td>3.5</td></tr>
+                    <tr><td>Sécurité / Pentest</td><td>3.5</td></tr>
+                    <tr><td>Python / Scripting</td><td>2.5</td></tr>
+                    <tr><td>Systèmes Linux</td><td>3</td></tr>
+                    <tr><td>Packet Tracer / GNS3</td><td>3</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="refl-block fade-up">
+            <h3><span class="ico"></span> Points forts</h3>
+            <ul>
+                <li><strong style="color:var(--text)">Résilience</strong> — Capacité à rester concentré lors de configurations réseau complexes ou de scripts qui ne compilent pas au premier essai.</li>
+                <li><strong style="color:var(--text)">Aisance à l'oral</strong> — Communication technique maîtrisée en soutenance de SAE, vulgarisation de concepts (VLAN, pentesting) devant jury.</li>
+                <li><strong style="color:var(--text)">Expertise sécurité</strong> — Bonne compréhension des protocoles et outils d'audit (Nessus, Kali). Capacité à détecter des failles critiques.</li>
+            </ul>
+        </div>
+
+        <div class="refl-block fade-up">
+            <h3><span class="ico"></span> Points faibles & axes d'amélioration</h3>
+            <ul>
+                <li><strong style="color:var(--text)">Manque de confiance</strong> — Parfois hésitant sur des architectures critiques. Remède : pratique sur simulateur (Packet Tracer).</li>
+                <li><strong style="color:var(--text)">Profil académique</strong> — Peu d'exposition à des parcs réels de grande envergure. Remède : stage en cybersécurité.</li>
+                <li><strong style="color:var(--text)">Développement Python</strong> — Tendance à travailler seul. Remède : collaboration, revues de code régulières.</li>
+                <li><strong style="color:var(--text)">Gestion du stress</strong> — Présent lors des jalons courts. Remède : planification rigoureuse (Gantt/Trello).</li>
+            </ul>
+        </div>
+
+        <div class="refl-block full fade-up">
+            <h3><span class="ico"></span> Compétences transversales</h3>
+            <table>
+                <thead><tr><th>Compétence</th><th>Illustration concrète</th><th>Niveau</th></tr></thead>
+                <tbody>
+                    <tr><td>Organisation</td><td>Gestion des jalons SAE303 (chiffrage, livrables, délais)</td><td>3/4</td></tr>
+                    <tr><td>Travail en équipe</td><td>TP R303, R307 et projets SAE en binôme/trinôme</td><td>3.5/4</td></tr>
+                    <tr><td>Communication</td><td>Soutenance orale SAE303 devant jury professionnel</td><td>3.5/4</td></tr>
+                    <tr><td>Autonomie</td><td>SAE302 : développement Python en autonomie complète</td><td>3/4</td></tr>
+                    <tr><td>Curiosité</td><td>Pratique personnelle CTF, veille cybersécurité régulière</td><td>4/4</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ BILAN ══ -->
+<section id="bilan" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="bilan-inner">
+        <div class="section-label" data-k="bil-l">Bilan</div>
+        <h2 class="section-title" data-k="bil-t">Mon évolution & objectif</h2>
+        <p class="fade-up" data-k="bil-p1">En deux ans de BUT R&T parcours cybersécurité, j'ai construit une base solide sur l'ensemble des compétences du référentiel. La progression est visible : les notes ont augmenté et les compétences s'ancrent dans la pratique réelle à travers les SAE et TP.</p>
+        <p class="fade-up" data-k="bil-p2">Mon domaine de prédilection est clair : la sécurité offensive et défensive (C4/C5), avec une appétence pour l'analyse d'incidents et la détection d'intrusion. SAE304 et les TP Snort, Suricata et Zabbix ont confirmé cette orientation. La compétence C3 (développement) reste l'axe d'amélioration prioritaire.</p>
+        <div class="bilan-hl fade-up">
+            <p data-k="bil-hl">Mon objectif professionnel : devenir <strong style="color:var(--accent)">hacker éthique</strong>, spécialisé en tests d'intrusion et en audit de sécurité des systèmes d'information.</p>
+        </div>
+        <p class="fade-up" data-k="bil-p3">La 3ème année de BUT (ou un master cybersécurité) représente l'étape suivante : consolider les fondations, décrocher un stage stimulant et atteindre un niveau professionnel pleinement opérationnel.</p>
+       <a href="doc/Résumé_compétences_Tindom_Arol_G2.pdf" target="_blank" class="btn fade-up" data-k="bil-btn">Voir le détail des compétences →</a>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ HOBBIES ══ -->
+<section id="hobbies">
+    <div class="section-label" data-k="hl1">En dehors des cours</div>
+    <h2 class="section-title" data-k="ht1">Hobbies</h2>
+    <div class="hob-grid">
+        <div class="hob-card fade-up">
+            <span class="hob-ico">⚽</span>
+            <div class="hob-title" data-k="hob1t">Football</div>
+            <p class="hob-desc" data-k="hob1d">Joueur en club au <strong style="color:var(--text)">FC Orsay Bures</strong>. Entraînements réguliers, matchs en championnat et esprit d'équipe au quotidien. Le football m'a appris la rigueur, la communication sous pression et la solidarité — des qualités directement transposables en projet technique.</p>
+        </div>
+        <div class="hob-card fade-up">
+            <span class="hob-ico">👔</span>
+            <div class="hob-title" data-k="hob2t">Mode</div>
+            <p class="hob-desc" data-k="hob2d">Fort intérêt pour le style et les tendances vestimentaires. Suivre la mode, c'est cultiver un sens aigu du détail et une capacité d'observation — une habitude qui rejoint étonnamment la vigilance requise en cybersécurité.</p>
+        </div>
+        <div class="hob-card fade-up">
+            <span class="hob-ico">🎮</span>
+            <div class="hob-title" data-k="hob3t">Jeux vidéo</div>
+            <p class="hob-desc" data-k="hob3d">Attirance pour les jeux de <strong style="color:var(--text)">stratégie et de réflexion</strong>. Ces univers développent la pensée analytique, la gestion des ressources sous contrainte et la prise de décision rapide — compétences précieuses en analyse d'incidents.</p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+    <div class="section-label" data-k="col1">Me contacter</div>
+    <h2 class="section-title" data-k="cot1">Contact</h2>
+    <form class="cont-block fade-up" onsubmit="sendMail(event)">
+        <div class="cont-row">
+            <span class="cont-key">Nom</span>
+            <input class="cont-input" type="text" id="formNom" placeholder="Votre nom" required>
+        </div>
+        <div class="cont-sep"></div>
+        <div class="cont-row">
+            <span class="cont-key">Email</span>
+            <input class="cont-input" type="email" id="formEmail" placeholder="votre@email.com" required>
+        </div>
+        <div class="cont-sep"></div>
+        <div class="cont-row" style="align-items:flex-start">
+            <span class="cont-key" style="padding-top:4px">Message</span>
+            <textarea class="cont-input cont-textarea" id="formMsg" placeholder="Pourquoi souhaitez-vous me contacter ?" required></textarea>
+        </div>
+        <div class="cont-sep"></div>
+        <button type="submit" class="btn" style="margin-top:0">Envoyer le message →</button>
+        <div id="formConfirm" style="display:none; color:var(--accent); font-size:12px; margin-top:12px;">
+            ✓ Votre message a bien été envoyé !
+        </div>
+    </form>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+    <span>Tindom Arol · BUT R&T Cybersécurité · IUT Villetaneuse</span>
+    <span>Portfolio 2025–2026</span>
+</footer>
+
+<!-- ══ MODAL COMPÉTENCE ══ -->
+<div class="modal-ov" id="modalOv" onclick="closeOut(event)">
+    <div class="modal-box">
+        <button class="modal-x" onclick="closeModal()">✕</button>
+        <div class="modal-tag"  id="mTag"></div>
+        <div class="modal-ttl" id="mTitle"></div>
+        <div class="modal-sc"  id="mScore"></div>
+        <p  class="modal-txt"  id="mDesc"></p>
+        <div class="modal-sub">Preuves & Documents associés</div>
+        <ul class="modal-docs" id="mDocs"></ul>
+    </div>
+</div>
+
+<!-- ══ VISIONNEUSE PDF ══ -->
+<div class="pdf-ov" id="pdfOv" onclick="closePdfOut(event)">
+    <div class="pdf-box">
+        <div class="pdf-header">
+            <span class="pdf-name" id="pdfName"></span>
+            <div style="display:flex;gap:12px;align-items:center;">
+                <a class="pdf-dl" id="pdfDl" href="#" target="_blank">↓ Télécharger</a>
+                <button class="pdf-close" onclick="closePdf()">✕</button>
+            </div>
+        </div>
+        <iframe class="pdf-frame" id="pdfFrame" src=""></iframe>
+    </div>
+</div>
+
+<script>
+/* ── DONNÉES COMPÉTENCES ── */
+const DATA = {
+    c1:{
+        tag:'C1 · Réseau',
+        title:"Administrer les réseaux et l'Internet",
+        score:'13<sup>.95 / 20</sup>',
+        desc:"Cette note reflète une bonne maîtrise des protocoles fondamentaux (TCP/IP, DNS, DHCP, OSPF) et de la configuration d'équipements réseau. Démontrée en TP R303 (services réseaux avancés) et R301 (réseaux de campus), ainsi qu'en SAE303 où j'ai conçu une architecture multi-sites complète. Je suis capable de déployer et d'administrer une infrastructure réseau, de diagnostiquer des pannes et de sécuriser les flux entre sites.",
+        docs:[
+            {l:"SAE303 — Concevoir un réseau informatique sécurisé multi-sites", f:"doc/SAE303 concevoir un reseau informatique sécurisé multi-sites.pdf"},
+            {l:"TP R303 — Services réseaux avancés", f:"doc/Rapport TP3-R303_Chaima_Ilyes_Arol_Gr1.pdf"},
+            {l:"TP R301 — Réseaux de Campus", f:"doc/TP2_R301_Tindom_Arol_Gr1 .pdf"},
+            {l:"TP R401 — Infrastructure de sécurité", f:"doc/TP1_R401_Seck_Tindom_Gr2.pdf"},
+        ]
+    },
+    c2:{
+        tag:'C2 · Connectivité',
+        title:"Connecter les entreprises et les usagers",
+        score:'12<sup>.66 / 20</sup>',
+        desc:"La SAE301 m'a conduit à mettre en œuvre un système de transmission réel et à analyser les courbes d'atténuation. Le TP R307 a approfondi les réseaux d'accès. La note traduit une bonne compréhension théorique avec une pratique encore en consolidation sur les équipements physiques et les liaisons WAN.",
+        docs:[
+            {l:"SAE301 — Mettre en œuvre un système de transmission", f:"doc/SAE301 Mettre en oeuvre un système de transmission.pdf"},
+            {l:"TP R307 — Réseaux daccès", f:"doc/TP1_R307_Tindom_Mazouqi_Lamvu_Gr1_A2_.pdf"},
+        ]
+    },
+    c3:{
+        tag:'C3 · Développement',
+        title:"Créer des outils et applications pour R&T",
+        score:'11<sup>.81 / 20</sup>',
+        desc:"La SAE302 m'a permis de développer une application client/serveur en Python (sockets TCP/UDP, authentification SQL). Le TP R308 a consolidé la programmation orientée réseau. La note traduit un niveau fonctionnel mais perfectible : je dois intensifier la pratique avec des projets personnels pour atteindre un niveau professionnel.",
+        docs:[
+            {l:"SAE302 — Développer des applications communicantes", f:"doc/SAE302-Developper des applications communicantes.pdf"},
+            {l:"TP R308 — Consolidation de la programmation", f:"doc/TP3_R308_AROL_TINDOM_GR1 .pdf"},
+            {l:"TP6 R405 — Automatisation des taches daministration", f:"doc/tp6_r405.pdf"},
+        ]
+    },
+    c4:{
+        tag:'C4 · Cybersécurité',
+        title:"Administrer un système d'information sécurisé",
+        score:'14<sup>.28 / 20</sup>',
+        desc:"La SAE303 m'a permis de concevoir une architecture SI sécurisée complète : VLAN, ACL, VPN site-à-site, pare-feu pfSense, chiffrage budgétaire TJM. Le TP R316 sur la méthodologie du pentesting a renforcé ma capacité à identifier et corriger des failles de manière méthodique. Cette note traduit une réelle aisance dans la sécurisation des systèmes d'information.",
+        docs:[
+            {l:"SAE303 — Concevoir un réseau informatique sécurisé multi-sites", f:"doc/SAE303 concevoir un reseau informatique sécurisé multi-sites.pdf"},
+            {l:"TP R316 — Méthodologie du pentesting", f:"doc/TP4_R316_Tindom_Arol_Gr1.pdf"},
+            {l:"SAE401 — Sécuriser un système dinformation", f:"doc/Rapport_tprm_tindom_sila-seck_mahmoune-diallo_mawloud_G2.pdf"},
+        ]
+    },
+    c5:{
+        tag:'C5 · Surveillance',
+        title:"Surveiller un système d'information sécurisé",
+        score:'14<sup>.28 / 20</sup>',
+        desc:"Ma compétence de prédilection, directement liée à mon objectif professionnel. La SAE304 m'a immergé dans le pentesting réel : audit offensif avec Kali Linux, Nessus, Nmap, identification et exploitation de vulnérabilités, rédaction de rapport d'audit. La SAE303 a intégré des mécanismes de surveillance active. Je suis à l'aise avec l'analyse de logs, la détection d'intrusion et la réponse à incident.",
+        docs:[
+            {l:"SAE304 — Découvrir le pentesting (Diapo)", f:"doc/diapo_decouvrir_pentest.pdf"},
+            {l:"SAE303 — Concevoir un réseau informatique sécurisé multi-sites", f:"doc/SAE303 concevoir un reseau informatique sécurisé multi-sites.pdf"},
+        ]
+    }
+};
+
+function openModal(id){
+    const d = DATA[id];
+    document.getElementById('mTag').textContent = d.tag;
+    document.getElementById('mTitle').textContent = d.title;
+    document.getElementById('mScore').innerHTML = d.score;
+    document.getElementById('mDesc').textContent = d.desc;
+    document.getElementById('mDocs').innerHTML = d.docs.map(x=>
+        `<li><a href="#" onclick="openPdf('${x.f}','${x.l}');return false;">${x.l}</a></li>`
+    ).join('');
+    document.getElementById('modalOv').classList.add('on');
+    document.body.style.overflow='hidden';
+}
+function closeModal(){
+    document.getElementById('modalOv').classList.remove('on');
+    document.body.style.overflow='';
+}
+function closeOut(e){ if(e.target===document.getElementById('modalOv')) closeModal(); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closePdf(); closeModal(); } });
+
+/* ── PDF VIEWER ── */
+function openPdf(file, label){
+    document.getElementById('pdfName').textContent = label;
+    document.getElementById('pdfFrame').src = file;
+    document.getElementById('pdfDl').href = file;
+    document.getElementById('pdfOv').classList.add('on');
+}
+function closePdf(){
+    document.getElementById('pdfOv').classList.remove('on');
+    document.getElementById('pdfFrame').src = '';
+}
+function closePdfOut(e){ if(e.target===document.getElementById('pdfOv')) closePdf(); }
+
+/* ── FADE-UP SCROLL ── */
+const obs = new IntersectionObserver((entries)=>{
+    entries.forEach((en,i)=>{
+        if(en.isIntersecting){
+            setTimeout(()=>en.target.classList.add('on'), i*70);
+            obs.unobserve(en.target);
+        }
+    });
+},{threshold:0.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+/* ── TRADUCTION EN / FR ── */
+let lang='fr';
+const TR={
+    'nav-acc':{en:'Home'},'nav-pres':{en:'About'},'nav-form':{en:'Education'},
+    'nav-comp':{en:'Skills'},'nav-sae':{en:'SAE Projects'},'nav-refl':{en:'Reflection'},
+    'nav-bil':{en:'Summary'},'nav-hob':{en:'Hobbies'},'nav-cont':{en:'Contact'},
+    'h-tag':{en:'Digital Portfolio · BUT R&T'},
+    'h-sub':{en:'Future cybersecurity engineer'},
+    'h-desc':{en:'2nd-year student in Networks & Telecommunications (cybersecurity track). This portfolio showcases my skills, their progression, and concrete evidence from my training — SAE, lab reports and projects.'},
+    's1':{en:'Skills'},'s2':{en:'SAE completed'},'s3':{en:'Overall average'},
+    'scroll':{en:'↓  Scroll'},
+    'pl1':{en:'About me'},'pt1':{en:'About'},
+    'pp1':{en:'Hello, my name is Arol Tindom. I am a 2nd-year student in Networks & Telecommunications at Université Sorbonne Paris Nord, cybersecurity track.'},
+    'pp2':{en:'I am passionate about new technologies, network infrastructure and cybersecurity. Since the start of my studies I have developed a strong interest in computer networks and information systems.'},
+    'pp3':{en:'My professional goal is to become a cybersecurity engineer.'},
+    'fl1':{en:'Academic background'},'ft1':{en:'Education'},
+    'fd1':{en:'Since 2024'},'fs1':{en:'Bachelor in Networks & Telecommunications — Cybersecurity Track'},
+    'fl1a':{en:'Training focused on network technologies, IT systems and cybersecurity'},
+    'fl1b':{en:'Modules: offensive security, system administration, telecommunications, pentesting'},
+    'fl1c':{en:'SAE (Learning & Assessment Situations) in real project conditions'},
+    'fd2':{en:'2023 — 2024'},'fs2':{en:'French Baccalaureate — Grade: Assez Bien (Merit)'},
+    'fl2a':{en:'Specialisations: Mathematics & Physics-Chemistry'},
+    'fl2b':{en:'Option: Advanced Mathematics'},'fl2c':{en:'Grade: Assez Bien (Merit)'},
+    'cl1':{en:'Self-assessment'},'ct1':{en:'My Skills'},
+    'ci1':{en:'Five skills structure the BUT R&T cybersecurity track. Each is assessed with a grade, an acquisition level, and concrete evidence. Click a card to see details and associated documents.'},
+    'ba1':{en:'Acquired'},'ba2':{en:'In progress'},'ba3':{en:'In progress'},
+    'ba4':{en:'Solid'},'ba5':{en:'Solid'},
+    'cn1':{en:'Administer Networks and the Internet'},
+    'cn2':{en:'Connect Businesses and Users'},
+    'cn3':{en:'Create Tools and Applications for R&T'},
+    'cn4':{en:"Administer a Secure Information System"},
+    'cn5':{en:'Monitor a Secure Information System'},
+    'cd1':{en:'Mastery of core protocols (TCP/IP, DNS, DHCP, OSPF), network equipment configuration and distributed systems. Well-established skill, demonstrated through lab reports and SAE.'},
+    'cd2':{en:'Multi-site architecture, VPN, WAN/LAN interconnections. SAE301 enabled implementing a full transmission system. Good theoretical base, practice continuously improving.'},
+    'cd3':{en:'Python communicating applications (TCP/UDP sockets), Linux scripting, embedded programming. SAE302 consolidated these skills. Priority improvement area.'},
+    'cd4':{en:'Secure architectures: VLAN, ACL, VPN, pfSense. SAE303 and TP R316 confirmed this advanced level. Key strength of the programme.'},
+    'cd5':{en:'Network monitoring (Zabbix), intrusion detection (Snort, Suricata), log analysis. SAE304 and SAE303 are the direct evidence. My professional area of preference.'},
+    'cta':{en:'See details'},'cta2':{en:'See details'},'cta3':{en:'See details'},'cta4':{en:'See details'},'cta5':{en:'See details'},
+    'sl1':{en:'Evidence & Projects'},'st1':{en:'Completed SAE Projects'},
+    'si1':{en:'SAE (Learning & Assessment Situations) are the concrete evidence of my skills. Each SAE is a real evaluated project documented in near-professional conditions.'},
+    's304t':{en:'Discover Pentesting'},'s304d':{en:'Offensive security audit on a simulated environment. Tools: Kali Linux, Nessus, Nmap. Vulnerability identification, controlled exploitation and full audit report.'},
+    's303t':{en:'Design a Secure Multi-Site Network'},'s303d':{en:'Full SI architecture: VLANs, inter-VLAN routing, site-to-site VPN, ACL, pfSense. Packet Tracer diagram, TJM costing and technical documentation.'},
+    's301t':{en:'Implement a Transmission System'},'s301d':{en:'Experimental study of a transmission device: attenuation measurements, characteristic curves, frequency analysis. Full report with measurement protocol.'},
+    's302t':{en:'Develop Communicating Applications'},'s302d':{en:'Python client/server application: TCP/UDP sockets, SQL authentication, custom protocol and network error handling.'},
+    'rl1':{en:'Reflective approach'},'rt1':{en:'Self-assessment & method'},
+    'ri1':{en:'This portfolio reflects a critical analysis of my own progression. Each skill is assessed honestly, with evidence and reflection on areas for improvement.'},
+    'bil-l':{en:'Summary'},'bil-t':{en:'My progress & goal'},
+    'bil-p1':{en:'Over two years of the BUT R&T cybersecurity track, I have built a solid foundation across all programme skills. Progress is visible: grades improved and skills are embedded in real practice through SAE and lab reports.'},
+    'bil-p2':{en:'My area of preference is clear: offensive and defensive security (C4/C5), with a particular interest in incident analysis and intrusion detection. SAE304 and the Snort/Suricata/Zabbix labs confirmed this. Skill C3 (development) remains the priority improvement area.'},
+    'bil-hl':{en:'My professional goal: become a SOC analyst or pentester, specialising in incident response and digital forensics investigation.'},
+    'bil-p3':{en:"3rd-year BUT (or a cybersecurity master's) is the next step: consolidate foundations, secure an internship and reach a fully operational professional level."},
+    'bil-btn':{en:'See full skill details →'},
+    'hl1':{en:'Outside of tech'},'ht1':{en:'Hobbies'},
+    'hob1t':{en:'Football'},'hob1d':{en:'Player at FC Orsay Bures. Regular training, league matches and team spirit daily. Football taught me discipline, communication under pressure and solidarity — skills that directly translate into technical projects.'},
+    'hob2t':{en:'Fashion'},'hob2d':{en:'Strong interest in style and fashion trends. Following fashion means cultivating a keen eye for detail and observation — habits that parallel the vigilance required in cybersecurity.'},
+    'hob3t':{en:'Video Games'},'hob3d':{en:'Drawn to strategy and puzzle games. These worlds develop analytical thinking, resource management under pressure and rapid decision-making — valuable in security incident analysis.'},
+    'col1':{en:'Get in touch'},'cot1':{en:'Contact'},
+    'ck-form':{en:'Programme'},'cv-form':{en:'BUT R&T Cybersecurity — IUT Villetaneuse'},
+    'ck-uni':{en:'University'},'ck-loc':{en:'Location'},'cv-loc':{en:'Île-de-France, France'},
+};
+
+const originals={};
+function toggleLang(){
+    const btn=document.getElementById('langBtn');
+    if(lang==='fr'){
+        document.querySelectorAll('[data-k]').forEach(el=>{
+            const k=el.getAttribute('data-k');
+            if(!originals[k]) originals[k]=el.innerHTML;
+            if(TR[k]&&TR[k].en) el.innerHTML=TR[k].en;
+        });
+        lang='en'; btn.textContent='FR';
+    } else {
+        document.querySelectorAll('[data-k]').forEach(el=>{
+            const k=el.getAttribute('data-k');
+            if(originals[k]) el.innerHTML=originals[k];
+        });
+        lang='fr'; btn.textContent='EN';
+    }
+}
+function sendMail(e){
+    e.preventDefault();
+    const nom   = document.getElementById('formNom').value;
+    const email = document.getElementById('formEmail').value;
+    const msg   = document.getElementById('formMsg').value;
+    document.getElementById('formConfirm').style.display = 'block';
+    e.target.reset();
+}
+</script>
+</body>
+</html>
